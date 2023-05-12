@@ -3,4 +3,11 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+  namespace :api do
+    namespace :v1 do
+      resource :weather, only: [] do
+        get 'city_lookup'
+      end
+    end
+  end
 end
