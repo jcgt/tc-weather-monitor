@@ -9,10 +9,12 @@ class OpenWeatherApiConnector
   end
 
   def geocode_location(location)
-    geocoder_results = self.class.get('/geo/1.0/direct',
-      query: {q: location, limit: 1, appid: @api_key})
+    MyAppTracer.in_span('geocode location') do |span|
+      geocoder_results = self.class.get('/geo/1.0/direct',
+        query: {q: location, limit: 1, appid: @api_key})
 
-    location = geocoder_results.first
+      location = geocoder_results.first
+    end
 
     return location
   end
