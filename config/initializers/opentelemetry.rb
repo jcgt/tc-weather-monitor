@@ -1,4 +1,5 @@
 require 'opentelemetry/sdk'
+require 'opentelemetry-exporter-otlp'
 require 'opentelemetry/instrumentation/all'
 require 'opentelemetry/semantic_conventions'
 

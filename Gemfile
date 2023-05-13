@@ -38,6 +38,7 @@ gem "bootsnap", require: false
 
 gem "opentelemetry-sdk", "~> 1.2"
 gem "opentelemetry-instrumentation-all", "~> 0.35.0"
+gem "opentelemetry-exporter-otlp", "~> 0.24.0"
 gem "opentelemetry-semantic_conventions", "1.8.0"
 
 gem "httparty", "~> 0.17.3"

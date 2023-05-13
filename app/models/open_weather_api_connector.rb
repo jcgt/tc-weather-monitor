@@ -9,21 +9,23 @@ class OpenWeatherApiConnector
   end
 
   def geocode_location(location)
-    MyAppTracer.in_span('geocode location') do |span|
-      geocoder_results = self.class.get('/geo/1.0/direct',
-        query: {q: location, limit: 1, appid: @api_key})
+    MyAppTracer.in_span('api_geocode_location_call') do |span|
+      geocoder_results = Rails.cache.fetch([:geocode_lookup, location.gsub(' ','').to_sym], expires_in: 1.day) do
+        self.class.get('/geo/1.0/direct', query: {q: location, limit: 1, appid: @api_key})
+      end
 
-      location = geocoder_results.first
+      return geocoder_results.first
     end
-
-    return location
   end
 
   def get_weather_by_coord(lat, lon)
-    response = self.class.get('/data/2.5/weather',
-      query: {lat: lat, lon: lon, appid: @api_key, units: 'metric'})
+    MyAppTracer.in_span('api_get_weather_by_coord_call') do |span|
+      response = Rails.cache.fetch([:weather_xy_lookup, lat, lon], expires_in: 10.minutes) do
+        self.class.get('/data/2.5/weather', query: {lat: lat, lon: lon, appid: @api_key, units: 'metric'})
+      end
 
-    return response
+      return response
+    end
   end
 
 
