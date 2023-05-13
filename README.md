@@ -104,3 +104,9 @@ Right now the application assumes the inputs are valid. There needs to be error 
 
 ### Improve Monitoring
 Given that I am new to OpenTelemetry and I literally just studied it, I'm sure there are ways to improve my current telemetry implementation.
+
+### Improve The Test Organization
+The test mocks/stubs are currently in-line. The test payloads shoud be in their own file.
+
+### Setup An External Cache Server
+Since this is just a proof-of-concept the caching mechanism is just the memory store. Ideally in a real production environment this should be an external service like Memcached or Redis to provide wide scaling friendly and server-reboot independent caching.
